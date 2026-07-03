@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio | Ingeniería de Retail y Software</title>
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="favi/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favi/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favi/favicon-16x16.png">
+    <link rel="icon" href="favi/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="192x192" href="favi/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="favi/android-chrome-512x512.png">
+    <link rel="manifest" href="favi/site.webmanifest">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --bg-black: #000000;
+            --bg-card: #0a0a0a;
+            --bg-card-hover: #111111;
+            --text-gray: #a3a3a3;
+            --text-white: #ffffff;
+            --border-color: #222222;
+            --accent: #d4af37; 
+            --font-title: 'Cardo', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        html { scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-gray);
+            font-family: var(--font-body);
+            font-size: 0.95rem; 
+            line-height: 1.7; 
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .app-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        /* BARRA LATERAL IZQUIERDA */
+        header {
+            width: 38%; 
+            position: fixed; top: 0; 
+            padding: 3rem 1rem 3rem 5rem; 
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+        }
+        
+        .profile-photo {
+            width: 120px; height: 120px; border-radius: 50%; object-fit: cover;
+            margin-bottom: 1.5rem; border: 1px solid var(--border-color); background-color: #111;
+        }
+        
+        h1 { 
+            font-family: var(--font-title);
+            color: var(--text-white); font-size: 3.2rem; line-height: 1.1; margin-bottom: 0.2rem; font-weight: 700; word-wrap: break-word; 
+        }
+        h2 { 
+            font-family: var(--font-title);
+            color: var(--text-gray); font-size: 1.3rem; font-weight: 400; margin-bottom: 1.2rem; font-style: italic; 
+        }
+        .bio { max-width: 300px; margin-bottom: 1.5rem; text-align: justify; font-size: 0.95rem; }
+        
+        /* MENÚ DE NAVEGACIÓN */
+        nav ul { list-style: none; margin-top: 1rem; }
+        nav ul li { margin-bottom: 0.85rem; } 
+        nav a { 
+            text-decoration: none; color: var(--text-gray); font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s; 
+            font-weight: 500;
+        }
+        nav a:hover { color: var(--text-white); }
+        nav a::before { content: "—"; margin-right: 15px; color: var(--border-color); transition: all 0.3s; }
+        nav a:hover::before { color: var(--text-white); letter-spacing: 4px; }
+        
+        .mobile-socials { display: none; gap: 1.5rem; margin-top: 2rem; flex-wrap: wrap; }
+        .mobile-socials a { color: var(--text-gray); text-decoration: none; font-size: 1.5rem; transition: color 0.3s; }
+        .mobile-socials a:hover { color: var(--text-white); }
+
+        /* CONTENIDO DERECHO */
+        main { width: 55%; margin-left: 42%; padding: 6rem 0; }
+        
+        section { 
+            margin-bottom: 80px; 
+            min-height: auto;   
+            scroll-margin-top: 4rem; 
+            display: flex; flex-direction: column;
+        }
+
+        h3.section-title {
+            font-family: var(--font-title);
+            color: var(--text-white); font-size: 2rem; margin-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem;
+        }
+        
+        p { margin-bottom: 1.2rem; text-align: justify; }
+        
+        .featured-project {
+            margin-bottom: 3rem; padding: 2rem; border-left: 1px solid var(--border-color);
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .featured-project:hover { background-color: var(--bg-card); border-left-color: var(--accent); }
+        
+        .featured-title { 
+            font-family: var(--font-title);
+            color: var(--text-white); font-size: 1.5rem; margin-bottom: 1rem; 
+        }
+        
+        /* ESTILOS DEL ACORDEÓN Y VISOR EMBEBIDO */
+        .experience-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            border-radius: 4px;
+        }
+        .cv-details summary {
+            list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 1.5rem; background-color: #111111; border: 1px solid var(--border-color);
+            color: var(--text-white); font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; user-select: none;
+        }
+        .cv-details summary:hover { border-color: var(--accent); color: var(--accent); }
+        .cv-details[open] summary .icon-arrow { transform: rotate(180deg); }
+        .icon-arrow { transition: transform 0.3s ease; font-size: 0.8rem; color: var(--accent); }
+        .cv-content { padding: 2rem 1rem 1rem 1rem; border-top: 1px solid var(--border-color); margin-top: 1rem; animation: fadeIn 0.4s ease; }
+        
+        .pdf-viewer-container {
+            width: 100%; height: 680px; border: 1px solid var(--border-color);
+            border-radius: 4px; overflow: hidden; background-color: #1a1a1a; margin-bottom: 1.5rem;
+        }
+        .pdf-viewer-frame { width: 100%; height: 100%; border: none; }
+
+        .cv-actions { margin-top: 1.5rem; text-align: center; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center; }
+        
+        .btn-download-gold {
+            display: inline-block; background-color: var(--accent); color: #000000 !important;
+            font-weight: 700; padding: 0.8rem 1.8rem; text-decoration: none; border-radius: 3px;
+            letter-spacing: 1px; font-size: 0.85rem; text-transform: uppercase; transition: transform 0.2s, background-color 0.2s; cursor: pointer;
+        }
+        .btn-download-gold:hover { background-color: #f3cc52; transform: translateY(-2px); }
+
+        .btn-outline-white {
+            display: inline-block; background-color: transparent; color: var(--text-white) !important;
+            font-weight: 600; padding: 0.8rem 1.8rem; text-decoration: none; border-radius: 3px; border: 1px solid var(--border-color);
+            letter-spacing: 1px; font-size: 0.85rem; text-transform: uppercase; transition: all 0.2s; cursor: pointer;
+        }
+        .btn-outline-white:hover { border-color: var(--text-white); background-color: rgba(255,255,255,0.05); }
+
+        .btn-close-viewer {
+            background: transparent; border: 1px solid #c0392b; color: #e74c3c;
+            padding: 0.8rem 1.5rem; border-radius: 3px; font-size: 0.85rem; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: all 0.2s;
+        }
+        .btn-close-viewer:hover { background-color: rgba(192, 57, 43, 0.1); color: #ff6b6b; border-color: #e74c3c; }
+
+        /* ===== ESTILOS PARA EL ACORDEÓN DE "ENFOQUE PUNTO DE VENTA" ===== */
+        .mission-details summary {
+            list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+            padding: 1rem 1.5rem; background-color: #111111; border: 1px solid var(--border-color);
+            color: var(--text-white); font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; user-select: none;
+        }
+        .mission-details summary:hover { border-color: var(--accent); color: var(--accent); }
+        .mission-details[open] summary .icon-arrow { transform: rotate(180deg); }
+        .mission-details .mission-content {
+            padding: 1.5rem 1rem 0.5rem 1rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 1rem;
+            animation: fadeIn 0.4s ease;
+        }
+        .mission-details .mission-content p {
+            color: var(--text-gray);
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        .mission-details .mission-content p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ===== ESTILOS PARA EL ACCESO RESTRINGIDO (PYTHON LAB) ===== */
+        .restricted-area {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 2rem 2.5rem;
+            text-align: center;
+            margin: 1.5rem 0;
+        }
+        .restricted-area .lock-icon {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        .restricted-area h4 {
+            font-family: var(--font-title);
+            color: var(--text-white);
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .restricted-area .badge {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 400;
+            background: rgba(212, 175, 55, 0.1);
+            padding: 0.1rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--accent);
+            font-family: var(--font-body);
+        }
+        .restricted-area p {
+            max-width: 500px;
+            margin: 0 auto 1.5rem auto;
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+        .restricted-area .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .restricted-area .input-wrapper {
+            position: relative;
+            flex: 1 1 200px;
+        }
+        .restricted-area .input-wrapper input[type="password"],
+        .restricted-area .input-wrapper input[type="text"] {
+            width: 100%;
+            background: #111111;
+            border: 1px solid var(--border-color);
+            padding: 0.7rem 2.5rem 0.7rem 1rem;
+            border-radius: 3px;
+            color: var(--text-white);
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .restricted-area .input-wrapper input:focus {
+            border-color: var(--accent);
+        }
+        .restricted-area .input-wrapper .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s;
+            z-index: 5;
+        }
+        .restricted-area .input-wrapper .toggle-password:hover {
+            color: var(--text-white);
+        }
+        .restricted-area .btn-access {
+            background-color: var(--accent);
+            color: #000;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 3px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .restricted-area .btn-access:hover {
+            background-color: #f3cc52;
+            transform: translateY(-2px);
+        }
+        .restricted-area .error-msg {
+            color: #e74c3c;
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+            min-height: 1.5rem;
+        }
+        .restricted-area .success-msg {
+            color: #2ecc71;
+            font-size: 0.85rem;
+            margin-top: 0.8rem;
+        }
+
+        /* Grid de proyectos (oculta por defecto) */
+        .project-grid {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            animation: fadeIn 0.6s ease;
+        }
+        .project-grid.visible {
+            display: grid;
+        }
+
+        /* Elementos internos de la grid (textos introductorios) */
+        .grid-intro {
+            grid-column: 1 / -1;
+            padding: 0 0 0.5rem 0;
+        }
+        .grid-intro p {
+            margin-bottom: 0.5rem;
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            text-align: justify;
+        }
+        .streamlit-note-inline {
+            grid-column: 1 / -1;
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            opacity: 0.6;
+            font-style: italic;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0.8rem 0;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .grid-card {
+            background-color: var(--bg-card); border: 1px solid var(--border-color); padding: 1.5rem;
+            border-radius: 4px; transition: transform 0.2s, background-color 0.2s;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .grid-card:hover { transform: translateY(-5px); background-color: var(--bg-card-hover); border-color: var(--text-gray); }
+        .grid-title { font-family: var(--font-title); color: var(--text-white); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .grid-desc { font-size: 0.88rem; margin-bottom: 1.5rem; flex-grow: 1; text-align: justify; opacity: 0.9; }
+        
+        .tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin-bottom: 1.5rem; }
+        .tech-tags li { font-size: 0.75rem; color: var(--accent); letter-spacing: 0.5px; font-weight: 500; }
+        
+        a.external-link { color: var(--text-white); text-decoration: none; border-bottom: 1px solid var(--border-color); padding-bottom: 2px; transition: border-color 0.3s; font-size: 0.85rem; }
+        a.external-link:hover { border-color: var(--text-white); }
+        .card-links { display: flex; gap: 1rem; margin-top: auto; flex-wrap: wrap; }
+
+        .grid-footer {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 1.5rem;
+        }
+
+        .site-footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border-color); font-size: 0.8rem; color: var(--text-gray); opacity: 0.5; text-align: center; letter-spacing: 0.5px; }
+        
+        .left-social-bar { position: fixed; bottom: 0; left: 40px; width: 40px; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+        .left-social-bar a { font-size: 1.3rem; color: var(--text-gray); text-decoration: none; padding: 12px 0; transition: color 0.3s, transform 0.3s; }
+        .left-social-bar a:hover { color: var(--text-white); transform: translateY(-4px); }
+        .left-social-bar::after { content: ""; width: 1px; height: 90px; background-color: var(--border-color); margin-top: 15px; }
+
+        .right-mail-bar { position: fixed; bottom: 0; right: 40px; width: 40px; display: flex; flex-direction: column; align-items: center; z-index: 10; }
+        .right-mail-bar a { font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; color: var(--text-gray); writing-mode: vertical-rl; padding: 10px 0; transition: color 0.3s, transform 0.3s; }
+        .right-mail-bar a:hover { color: var(--text-white); transform: translateY(-4px); }
+        .right-mail-bar::after { content: ""; width: 1px; height: 90px; background-color: var(--border-color); margin-top: 15px; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 768px) {
+            .app-container { flex-direction: column; padding: 2rem; }
+            header { width: 100%; position: relative; height: auto; padding: 2rem 0; }
+            main { width: 100%; margin-left: 0; padding: 2rem 0; }
+            .left-social-bar, .right-mail-bar { display: none; }
+            .mobile-socials { display: flex !important; }
+            .featured-project { border-left: none; padding: 0; border-top: 1px solid var(--border-color); padding-top: 2rem; }
+            .experience-card { padding: 1.2rem; }
+            .pdf-viewer-container { display: none; }
+            .btn-close-viewer { display: none; }
+            .restricted-area { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+
+        <header>
+            <div>
+                <img src="mi.png" alt="Foto de perfil" class="profile-photo">
+                <h1>Jose Luis Asenjo</h1>
+                <h2>Ingeniero de Retail & Software</h2>
+                <p class="bio">19 años de experiencia en retail y operaciones que combino con un enfoque analítico y de programación. Mi conocimiento del negocio me permite convertir datos complejos en estrategias accionables, optimizando procesos y equipos. Actualmente desarrollo soluciones en Python y BI para automatizar la toma de decisiones en entornos de alto volumen.</p>
+
+                <nav>
+                    <ul>
+                        <li><a href="#about">Visión Operativa</a></li>
+                        <li><a href="#experience">Experiencia</a></li>
+                        <li><a href="#retail-analytics">Analítica Retail</a></li>
+                        <li><a href="#publications">Publicaciones</a></li>
+                        <li><a href="#references">Marco Teórico</a></li>
+                        <li><a href="#python-lab">Python Lab</a></li>
+                        <li><a href="#contact">Contacto</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="mobile-socials">
+                <a href="https://www.linkedin.com/in/joseluisasenjo" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/joseasenjo" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.salir.com/autor/jose-luis-asenjo-16.html" target="_blank" rel="noopener noreferrer" title="Salir.com"><i class="fas fa-map-marker-alt"></i></a>
+                <a href="https://youtube.com/@codepydroid?si=hx4jE4KthjKyhizK" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+        </header>
+
+        <main>
+            <!-- ===== SECCIÓN VISIÓN OPERATIVA ===== -->
+            <section id="about">
+                <h3 class="section-title">Visión Operativa</h3>
+                <p>Con un <strong>perfil híbrido</strong> entre el análisis analítico del retail y el desarrollo personalizado de métricas y dashboards, he dirigido operaciones logísticas, coordinado equipos operativos y analizado flujos comerciales en retail de alto volumen <em>(Lardagi, Iparlat, Guipasa)</em> bajo una premisa constante: <strong>transformar datos transaccionales en rentabilidad</strong>.</p>
+                <p><strong>Mi misión profesional es traducir problemas de negocio en soluciones técnicas, diseñando arquitecturas de datos que respondan a KPIs críticos y generen valor tangible en el punto de venta.</strong></p>
+                <p>Tras años viviendo las ineficiencias del comercio físico a pie de pista —logrando hitos como reducir un 15% los tiempos de entrega—, decidí aplicar la ingeniería de software en <strong>Python</strong> y <strong>Business Intelligence</strong> para resolverlas: mitigando mermas (<em>shrinkage</em>), controlando stocks y optimizando métricas complejas.</p>
+
+                <!-- ACORDEÓN CON EL ENFOQUE EN EL PUNTO DE VENTA (sin amarillo) -->
+                <details class="mission-details" id="missionAccordion">
+                    <summary>
+                        <span><i class="fas fa-store" style="margin-right: 8px;"></i> Ver mi enfoque en el punto de venta</span>
+                        <i class="fas fa-chevron-down icon-arrow"></i>
+                    </summary>
+                    <div class="mission-content">
+                        <p>✦ Crear una experiencia única para el cliente y fomentar la fidelización a largo plazo mediante un servicio auténtico y personalizado.</p>
+                        <p>✦ Incrementar las cifras de ventas mediante acciones continuas, proactivas y orientadas al rendimiento.</p>
+                        <p>✦ Implementar profesionalmente los estándares de imagen y merchandising visual de toda la empresa.</p>
+                        <p>✦ Garantizar una organización eficiente del almacén de acuerdo con los procesos internos y las directrices de la compañía.</p>
+                        <p>✦ Mejorar continuamente el rendimiento mediante la participación regular en sesiones de formación, reuniones de tienda y talleres.</p>
+                        <p>✦ Lograr de forma fiable los objetivos anuales, estacionales, mensuales y semanales, teniendo en cuenta los KPIs pertinentes.</p>
+                        <p>✦ Impartir formación a los empleados sobre producto y servicio al cliente, identificando necesidades de formación adicionales.</p>
+                    </div>
+                </details>
+                <!-- FIN ACORDEÓN -->
+            </section>
+
+            <section id="experience">
+                <h3 class="section-title">Experiencia Profesional</h3>
+                <div class="experience-card">
+                    <div class="exp-intro">
+                        <h4 class="featured-title" style="margin-bottom: 0.4rem; font-size: 1.3rem;">Trayectoria Ejecutiva y Operativa en Retail</h4>
+                        <p style="margin-bottom: 1.5rem; color: var(--text-gray); font-size: 0.9rem;">Liderazgo operativo y analítico en retail de alto rendimiento. Combino la gestión de equipos y estrategias comerciales con el desarrollo de soluciones de software en Python, aplicando arquitecturas de datos escalables para optimizar KPIs críticos y automatizar la toma de decisiones.</p>
+                    </div>
+
+                    <details class="cv-details" id="cvAccordion">
+                        <summary>
+                            <span><i class="far fa-id-card" style="margin-right: 8px;"></i> Previsualizar Historial Laboral y Currículum</span>
+                            <i class="fas fa-chevron-down icon-arrow"></i>
+                        </summary>
+                        
+                        <div class="cv-content">
+                            <div class="pdf-viewer-container">
+                                <iframe src="Jose_Luis_Asenjo_CV_Retail_Analytics.pdf" class="pdf-viewer-frame" title="Previsualización del Curriculum">
+                                    Tu navegador no soporta la previsualización de PDFs incrustados. Puedes descargarlo en el botón de abajo.
+                                </iframe>
+                            </div>
+
+                            <div class="cv-actions">
+                                <a href="Jose_Luis_Asenjo_CV_Retail_Analytics.pdf" target="_blank" class="btn-outline-white">
+                                    <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i> Abrir en Pestaña Completa
+                                </a>
+                                <a href="Jose_Luis_Asenjo_CV_Retail_Analytics.pdf" download="Jose_Luis_Asenjo_CV_Retail_Analytics.pdf" class="btn-download-gold">
+                                    <i class="fas fa-file-download" style="margin-right: 8px;"></i> Descargar Currículum
+                                </a>
+                                
+                                <button type="button" class="btn-close-viewer" onclick="document.getElementById('cvAccordion').removeAttribute('open'); document.getElementById('experience').scrollIntoView({behavior: 'smooth'});">
+                                    <i class="fas fa-times" style="margin-right: 6px;"></i> Cerrar Visor
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN ANALÍTICA RETAIL & BI (con nota técnica visible) ===== -->
+            <section id="retail-analytics">
+                <h3 class="section-title">Analítica Retail & BI</h3>
+                <p style="margin-bottom: 1.5rem;">Cada uno de estos proyectos ha sido concebido para <strong>traducir problemas de negocio en soluciones técnicas</strong>, con arquitecturas de datos diseñadas para responder a KPIs críticos y optimizar la toma de decisiones. Aplicaciones SaaS, motores analíticos y dashboards interactivos <strong>diseñados y desarrollados íntegramente por mí</strong> en Python para resolver cuellos de botella reales de inventario y márgenes.</p>
+
+                <!-- NOTA TÉCNICA DE STREAMLIT (AHORA VISIBLE EN SECCIÓN PÚBLICA) -->
+                <div class="streamlit-note-inline" style="grid-column: 1 / -1; font-size: 0.75rem; color: var(--text-gray); opacity: 0.6; font-style: italic; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 0.8rem 0; margin-bottom: 2rem; text-align: center;">
+                    <i class="fas fa-info-circle" style="margin-right: 6px;"></i> 
+                    Nota técnica: Las aplicaciones desplegadas en Streamlit Community Cloud pueden requerir una reactivación manual 
+                    (<em>wake-up</em>) tras períodos de inactividad, ya que el servidor suspende los recursos para optimizar el consumo. 
+                    Si la aplicación no responde, pulse el botón <strong>"Rerun"</strong> o <strong>"Wake up"</strong> en la interfaz de Streamlit para reanudar la sesión.
+                </div>
+
+                <div class="featured-project">
+                    <h4 class="featured-title">Retail Data Strategic: Inteligencia Competitiva</h4>
+                    <p>Ecosistema integral de Inteligencia Competitiva (ETL + BI) diseñado para monitorizar el posicionamiento de precios, la profundidad de catálogo y la disponibilidad de inventario de competidores en el sector retail de moda. Este proyecto resuelve el problema de la asimetría de información comercial, transformando código HTML desestructurado en un panel de decisiones estratégicas en tiempo real.</p>
+                    <ul class="tech-tags">
+                        <li>ETL Pipeline</li><li>Business Intelligence</li><li>Streamlit</li><li>Data Strategy</li>
+                    </ul>
+                    <div class="card-links" style="margin-top: 1.5rem;">
+                        <a href="https://eduard289-analitica-retail-segmentacion-app-1vfgw8.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Explorar Dashboard ↗</a>
+                        <a href="https://github.com/joseasenjo/analitica-retail-segmentacion/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="external-link">Ver en GitHub ↗</a>
+                    </div>
+                </div>
+
+                <div class="featured-project">
+                    <h4 class="featured-title">Retail Data Mining: Analítica Avanzada SaaS</h4>
+                    <p>Este proyecto implementa una aplicación SaaS orientada a la analítica avanzada en el sector retail. Su núcleo es un motor de minería de datos basado en el algoritmo Apriori, diseñado para ejecutar análisis de la cesta de la compra (Market Basket Analysis) sobre transacciones internacionales. La herramienta transforma datos transaccionales brutos en decisiones estratégicas de negocio, identificando patrones ocultos de compra conjunta y cuantificando su impacto financiero directo.</p>
+                    <ul class="tech-tags">
+                        <li>SaaS Architecture</li><li>Data Mining</li><li>Apriori Algorithm</li><li>Market Basket Analysis</li><li>Streamlit</li>
+                    </ul>
+                    <div class="card-links" style="margin-top: 1.5rem;">
+                        <a href="https://retail-data-mining.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Explorar Dashboard ↗</a>
+                        <a href="https://github.com/joseasenjo/retail-data-mining/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="external-link">Ver en GitHub ↗</a>
+                    </div>
+                </div>
+
+                <div class="featured-project">
+                    <h4 class="featured-title">Retail Analytics Engine: Auditoría Avanzada</h4>
+                    <p>Motor analítico de alto rendimiento construido en Streamlit para el diagnóstico operativo y financiero en retail. Implementa una arquitectura Zero-Disk para procesar transacciones en memoria, calculando métricas avanzadas como el Índice de Eficiencia Retail (IER), márgenes netos y rotación de stock (DSI). El sistema inyecta alertas de riesgo dinámicas según la volatilidad sectorial (Moda, Tecnología, Alimentación) y renderiza gráficos vectoriales interactivos.</p>
+                    <ul class="tech-tags">
+                        <li>Streamlit</li><li>Python</li><li>Data Analytics</li><li>Plotly</li>
+                    </ul>
+                    <div class="card-links" style="margin-top: 1.5rem;">
+                        <a href="https://retail-analytics-engine-cm479ppvxegtucofpg7te2.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Explorar Aplicación ↗</a>
+                        <a href="https://github.com/joseasenjo/retail-analytics-engine/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="external-link">Ver en GitHub ↗</a>
+                        <a href="https://www.linkedin.com/feed/update/urn:li:activity:7473047743616229377/" target="_blank" rel="noopener noreferrer" class="external-link">Ver Post en LinkedIn ↗</a>
+                    </div>
+                </div>
+
+                <div class="featured-project">
+                    <h4 class="featured-title">Retail Pulse: Analítica de Ventas en Tiempo Real</h4>
+                    <p>Motor de analítica avanzado que conecta en tiempo real con la API de Square (TPV) para extraer datos de ventas, transacciones, vendedores y tráfico. Calcula automáticamente más de 40 KPIs agrupados en cinco categorías, con benchmarks ajustables según el sector. Todo se visualiza en un dashboard interactivo con Streamlit y Plotly, permitiendo exportar informes ejecutivos en PDF.</p>
+                    <ul class="tech-tags">
+                        <li>Python</li><li>Streamlit</li><li>Square API</li><li>Data Analytics</li><li>Plotly</li><li>KPIs</li>
+                    </ul>
+                    <div class="card-links" style="margin-top: 1.5rem;">
+                        <a href="https://asenjoretailpulse.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Explorar Demo en Vivo ↗</a>
+                        <a href="https://github.com/joseasenjo/retail-pulse/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="external-link">Ver en GitHub ↗</a>
+                        <a href="https://www.linkedin.com/article/edit/7476320482431102976/" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo Completo ↗</a>
+                    </div>
+                </div>
+
+                <!-- Retail Shift & Performance Optimizer -->
+                <div class="featured-project">
+                    <h4 class="featured-title">Retail Shift & Performance Optimizer</h4>
+                    <p>Motor analítico predictivo para el dimensionamiento de plantillas y la auditoría de rendimiento comercial en entornos Retail. Desarrollado con una arquitectura <strong>Zero-Disk (In-Memory Processing)</strong>, el sistema cuantifica el punto de equilibrio exacto entre la eficiencia de costes laborales (OPEX) y la calidad del servicio al cliente.</p>
+                    <p>La herramienta opera bajo un modelo Stateless / Zero-Disk: el usuario inyecta los datos del TPV, el procesamiento se ejecuta en RAM, no se escribe en discos ni bases de datos externas, y al cerrar la sesión los datos se autodestruyen, garantizando el cumplimiento del RGPD.</p>
+                    <p><strong>Capacidades analíticas:</strong> Simulador Dinámico What-If (recalcula en tiempo real el P&L del turno), Curva de Eficiencia (tráfico vs. coste laboral), Matriz de Auditoría Individual (Performance Matrix) que clasifica al personal cruzando UPT y AOV, y Heatmap de Saturación Operativa para identificar puntos críticos de colapso.</p>
+                    <ul class="tech-tags">
+                        <li>Python</li><li>Streamlit</li><li>Zero-Disk</li><li>Workforce Optimization</li><li>Performance Analytics</li>
+                    </ul>
+                    <div class="card-links" style="margin-top: 1.5rem;">
+                        <a href="https://retail-shift-optimizer-asenjo.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Explorar Aplicación ↗</a>
+                        <a href="https://github.com/joseasenjo/retail-shift-optimizer" target="_blank" rel="noopener noreferrer" class="external-link">Ver en GitHub ↗</a>
+                    </div>
+                </div>
+
+                <!-- ===== Auditoría de Rendimiento: Sports San Sebastian (sin botones externos) ===== -->
+                <div class="featured-project">
+                    <h4 class="featured-title">Auditoría de Rendimiento: Sports San Sebastian</h4>
+                    <p><strong>Demo de analisis retail segmento deportivo:</strong> Auditoría completa de una tienda ubicada en el centro de Donostia (calle Aldama), una de las zonas con mayor afluencia de Gipuzkoa. La herramienta <strong>Retail Shift Auditor</strong> analizó 4.786 transacciones y 16.220 visitas, identificando un <strong>Coste de Oportunidad (COP) de 52.930 €/mes</strong> (37,2% de las ventas) derivado de ineficiencias en staffing, venta cruzada y up-selling.</p>
+                    <p>El informe ejecutivo generado incluye un <strong>análisis detallado del desempeño individual</strong> de los cinco vendedores, una matriz de calor de saturación por franjas horarias, y un <strong>plan de acción con plazos y KPIs</strong> que proyecta una mejora del +25-35% en facturación con un ROI estimado superior al 4.000%.</p>
+                    <p><strong>Contexto regional:</strong> La tienda se beneficia de una ubicación estratégica (Smart Kalea: 93.508 personas/día de media) y de un ecosistema deportivo en crecimiento (Sportek Hub, referentes como Etxeondo).</p>
+                    <ul class="tech-tags">
+                        <li>Python</li><li>FastAPI</li><li>Plotly</li><li>ReportLab</li><li>Data Analytics</li><li>Workforce Optimization</li>
+                    </ul>
+
+                    <!-- ACORDEÓN con visor PDF (contiene todas las opciones de descarga) -->
+                    <details class="cv-details" id="auditAccordion" style="margin-top: 1.5rem;">
+                        <summary style="background-color: #1a1a1a; border-color: var(--accent); color: var(--accent);">
+                            <span><i class="fas fa-eye" style="margin-right: 8px;"></i> Previsualizar Informe (13 páginas)</span>
+                            <i class="fas fa-chevron-down icon-arrow"></i>
+                        </summary>
+                        
+                        <div class="cv-content" style="padding: 1.5rem 0 0 0; border-top: 1px solid var(--border-color);">
+                            <div class="pdf-viewer-container">
+                                <iframe src="Auditoria_SPORTS_SAN_SEBASTIAN_20260701_1254.pdf" class="pdf-viewer-frame" title="Informe de Auditoría Sports San Sebastian">
+                                    Tu navegador no soporta la previsualización de PDFs incrustados. Puedes descargarlo usando los botones de abajo.
+                                </iframe>
+                            </div>
+                            <div class="cv-actions" style="margin-top: 1rem;">
+                                <a href="Auditoria_SPORTS_SAN_SEBASTIAN_20260701_1254.pdf" target="_blank" class="btn-outline-white" style="border-color: var(--accent); color: var(--accent);">
+                                    <i class="fas fa-external-link-alt" style="margin-right: 8px;"></i> Abrir en Pestaña Completa
+                                </a>
+                                <a href="Auditoria_SPORTS_SAN_SEBASTIAN_20260701_1254.pdf" download="Auditoria_Sports_San_Sebastian.pdf" class="btn-download-gold">
+                                    <i class="fas fa-file-download" style="margin-right: 8px;"></i> Descargar Informe
+                                </a>
+                                <a href="Informe_ejecutivoSports_San_Sebastian_.pdf" download="Informe_Ejecutivo_Sports_San_Sebastian.pdf" class="btn-outline-white">
+                                    <i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Descargar Ejecutivo
+                                </a>
+                                <button type="button" class="btn-close-viewer" onclick="document.getElementById('auditAccordion').removeAttribute('open'); document.getElementById('retail-analytics').scrollIntoView({behavior: 'smooth'});">
+                                    <i class="fas fa-times" style="margin-right: 6px;"></i> Cerrar Visor
+                                </button>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+                <!-- ===== FIN AUDITORÍA ===== -->
+
+            </section>
+
+            <section id="publications">
+                <h3 class="section-title">Investigación y Publicaciones</h3>
+                <p>Artículos de investigación, análisis técnico y metodologías sobre inteligencia comercial, métricas y estrategia de datos <strong>escritos y publicados por mí</strong> en el sector retail.</p>
+
+                <div class="featured-project" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h4 class="featured-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Arquitectura de KPIs en Retail Textil: La Supervivencia</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Artículo de Investigación • Publicado en LinkedIn</p>
+                    <p>Arquitectura estratégica de KPIs adaptada al ciclo de vida del retail, demostrando que la prioridad analítica debe alinearse siempre con el riesgo más crítico del negocio.</p>
+                    <a href="https://www.linkedin.com/pulse/arquitectura-de-kpis-en-retail-textil-la-supervivencia-j-l-as-jsmee/" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo ↗</a>
+                </div>
+
+                <div class="featured-project" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h4 class="featured-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">El Store Manager y el Exceso de Métricas</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Artículo de Investigación • Publicado en LinkedIn</p>
+                    <p>Análisis técnico sobre la optimización de KPIs en retail para Store Managers, enfocado en traducir métricas de tráfico, ticket, stock y retención en acciones operativas directas.</p>
+                    <a href="https://www.linkedin.com/pulse/storemanager-y-el-exceso-de-metricas-j-l-as-0ptne/" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo ↗</a>
+                </div>
+
+                <div class="featured-project" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h4 class="featured-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">CAC y Valor del Ciclo de Vida del Cliente</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Artículo de Investigación • Publicado en LinkedIn</p>
+                    <p>CAC (Coste de Adquisición) y Valor del Ciclo de Vida como KPIs esenciales para la proyección futura y viabilidad en el entorno del retail.</p>
+                    <a href="https://www.linkedin.com/pulse/coste-adquisici%25C3%25B3n-clientes-y-valor-ciclo-de-vida-cliente-j-l-as-ga0ue" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo ↗</a>
+                </div>
+
+                <div class="featured-project" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h4 class="featured-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Cuadro de Mando del Store Manager</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Artículo de Investigación • Publicado en LinkedIn</p>
+                    <p>Compilación, desarrollo y ejemplificación de distintas KPIs enfocadas en la toma de decisiones ágiles en tienda física.</p>
+                    <a href="https://www.linkedin.com/pulse/cuadro-de-mando-del-store-manager-j-l-as-pngre/" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo ↗</a>
+                </div>
+
+                <div class="featured-project" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+                    <h4 class="featured-title" style="font-size: 1.2rem; margin-bottom: 0.5rem;">Diagnóstico Automatizado de Ineficiencias Críticas</h4>
+                    <p style="font-size: 0.85rem; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Análisis Estratégico • Publicado en LinkedIn</p>
+                    <p>El éxito en el retail depende de implementar métricas personalizadas. Se demuestra cómo un diagnóstico automatizado permite identificar y corregir ineficiencias.</p>
+                    <a href="https://www.linkedin.com/feed/update/urn:li:ugcPost:7473047667435094016/" target="_blank" rel="noopener noreferrer" class="external-link">Ver Publicación ↗</a>
+                </div>
+            </section>
+
+            <section id="references">
+                <h3 class="section-title">Marco Teórico y Referencias</h3>
+                <p>Fundamentos metodológicos, marcos analíticos y literatura especializada que respaldan la arquitectura estratégica y el desarrollo de mis modelos de negocio en retail. <strong>(Lecturas recomendadas)</strong>.</p>
+
+                <div class="featured-project" style="padding: 1.8rem; margin-bottom: 1.5rem; border-left-color: var(--accent);">
+                    <h4 class="featured-title" style="font-size: 1.3rem; margin-bottom: 0.3rem;">Lean Analytics</h4>
+                    <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Alistair Croll & Benjamin Yoskovitz</p>
+                    <p>Marco de referencia para la estructuración y aislamiento de métricas críticas según la etapa de madurez corporativa. Aplica lógicas analíticas estrictas para optimizar embudos de conversión.</p>
+                </div>
+
+                <div class="featured-project" style="padding: 1.8rem; margin-bottom: 1.5rem; border-left-color: var(--accent);">
+                    <h4 class="featured-title" style="font-size: 1.3rem; margin-bottom: 0.3rem;">Retail Scorecard: El cuadro de mando del comercio omnicanal</h4>
+                    <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Marcos Álvarez Orozco</p>
+                    <p>Manual avanzado para la definición conceptual, ponderación y despliegue operativo de indicadores clave (KPIs) en entornos de comercio unificado.</p>
+                </div>
+
+                <div class="featured-project" style="padding: 1.8rem; margin-bottom: 1.5rem; border-left-color: var(--accent);">
+                    <h4 class="featured-title" style="font-size: 1.3rem; margin-bottom: 0.3rem;">Guía práctica de analítica digital: ROI, KPI y métricas</h4>
+                    <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">José Gómez-Zorrilla & Daniel Sánchez Piña</p>
+                    <p>Metodología pragmática orientada al aislamiento de ruido en la recopilación de datos de atribución comercial.</p>
+                </div>
+
+                <div class="featured-project" style="padding: 1.8rem; margin-bottom: 1.5rem; border-left-color: var(--accent);">
+                    <h4 class="featured-title" style="font-size: 1.3rem; margin-bottom: 0.3rem;">El método Lean Startup</h4>
+                    <p style="font-size: 0.85rem; font-style: italic; margin-bottom: 1rem; color: var(--accent); font-weight: 500;">Eric Ries</p>
+                    <p>Filosofía de gestión basada en la innovación continua, el desarrollo de Productos Mínimos Viables (MVP) y el aprendizaje validado.</p>
+                </div>
+            </section>
+
+            <!-- ===== SECCIÓN PYTHON LAB CON ACCESO RESTRINGIDO ===== -->
+            <section id="python-lab">
+                <h3 class="section-title">Python Lab & Automatización</h3>
+                
+                <!-- BLOQUE DE ACCESO RESTRINGIDO (visible siempre) -->
+                <div class="restricted-area" id="restrictedBlock">
+                    <div class="lock-icon"><i class="fas fa-lock"></i></div>
+                    <h4>
+                        Área Restringida
+                        <span class="badge">🔐 Acceso bajo petición</span>
+                    </h4>
+                    <p>Esta sección contiene herramientas avanzadas de arquitectura de software, OSINT y Scraping. Introduzca la clave de acceso para visualizar el laboratorio de algoritmos.</p>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <input type="password" id="passwordInput" placeholder="Introduce la contraseña" autocomplete="off">
+                            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                        </div>
+                        <button class="btn-access" id="accessBtn">Acceder</button>
+                    </div>
+                    <div id="accessMessage" class="error-msg"></div>
+                </div>
+
+                <!-- GRID DE PROYECTOS (oculta por defecto) y textos internos -->
+                <div class="project-grid" id="projectGrid">
+                    <!-- Texto introductorio (solo visible tras autenticación) -->
+                    <div class="grid-intro">
+                        <p>Ecosistema de herramientas de desarrollo propio, scripts de automatización, arquitecturas Zero-Disk y modelos asíncronos.</p>
+                    </div>
+
+                    <!-- Nota técnica de Streamlit (solo visible tras autenticación) -->
+                    <div class="streamlit-note-inline">
+                        <i class="fas fa-info-circle" style="margin-right: 6px;"></i> 
+                        Nota técnica: Las aplicaciones desplegadas en Streamlit Community Cloud pueden requerir una reactivación manual 
+                        (<em>wake-up</em>) tras períodos de inactividad, ya que el servidor suspende los recursos para optimizar el consumo. 
+                        Si la aplicación no responde, pulse el botón <strong>"Rerun"</strong> o <strong>"Wake up"</strong> en la interfaz de Streamlit para reanudar la sesión.
+                    </div>
+
+                    <!-- Proyecto 1 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">GitHub Repository Auditor</h4>
+                        <p class="grid-desc">Arquitectura híbrida (Python + Node.js) para auditar la salud de repositorios públicos en GitHub. Analiza impacto social, actividad de issues, peso del repositorio y lenguajes predominantes, con soporte para autenticación mediante PAT.</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>Node.js</li><li>Streamlit</li><li>GitHub API</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://app-repo-auditor.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Ver App ↗</a>
+                            <a href="https://github.com/joseasenjo/github-repo-auditor" target="_blank" rel="noopener noreferrer" class="external-link">Ver Código ↗</a>
+                            <a href="https://www.linkedin.com/pulse/auditor-avanzado-de-repositorios-con-github-api-j-l-as-btene/" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 2 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">Docker Lab: Generador y Analizador</h4>
+                        <p class="grid-desc">Plataforma educativa para la generación programática de Dockerfiles, análisis sintáctico de comandos docker run y orquestación con docker-compose. Diseñada para cerrar la brecha entre la ejecución imperativa y la comprensión declarativa de la infraestructura.</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>Streamlit</li><li>Docker</li><li>DevOps</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://docker-app.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Ver App ↗</a>
+                            <a href="https://github.com/joseasenjo/docker-app" target="_blank" rel="noopener noreferrer" class="external-link">Ver Código ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 3 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">AltruistSim / Kernel Panic Mental</h4>
+                        <p class="grid-desc">Simulación basada en agentes (ABM) del dilema del prisionero iterado. Modela cientos de individuos con heurísticas éticas (cooperador, tramposo, recíproco, rencoroso, detective) y analiza la evolución social mediante selección natural y mutación. Con renderizado en Canvas a 60 FPS y dashboard analítico en Streamlit.</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>JavaScript</li><li>Streamlit</li><li>Canvas</li><li>Teoría de Juegos</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://kernel-panic-mental.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Ver Simulador ↗</a>
+                            <a href="https://github.com/joseasenjo/Kernel-Panic-Mental" target="_blank" rel="noopener noreferrer" class="external-link">Ver Código ↗</a>
+                            <a href="https://www.linkedin.com/pulse/altruistsim-v100-simulaci%C3%B3n-de-colapso-social-y-teor%C3%ADa-j-l-as-znxef/" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 4 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">Advanced Travel Bot</h4>
+                        <p class="grid-desc">Motor de inteligencia de mercado para auditar algoritmos de discriminación de precios (Dynamic Pricing) en agencias de viajes. Basado en ingeniería inversa de tráfico XHR, evasión TLS/JA3 con curl_cffi y arquitectura de tubería de paso para un consumo de RAM estable (20-50 MB).</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>curl_cffi</li><li>Dynamic Pricing</li><li>Ingeniería Inversa</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://advanced-travel-bot-app-w2hzzd.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Ver App ↗</a>
+                            <a href="https://github.com/joseasenjo/Advanced-Travel-Bot" target="_blank" rel="noopener noreferrer" class="external-link">Ver Código ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 5 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">Thermos 3D - Urban Heat</h4>
+                        <p class="grid-desc">Dashboard geoespacial para la monitorización de Islas de Calor Urbano (UHI). Simula la temperatura de superficie (LST) en 52 capitales españolas mediante distribuciones normales multivariadas, calcula el albedo y extrae KPIs como el impacto energético y las zonas de riesgo clínico.</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>Streamlit</li><li>pydeck</li><li>GIS</li><li>Datos Climáticos</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://eduard289-thermos-3d-app-rgz6ai.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Ver App ↗</a>
+                            <a href="https://github.com/joseasenjo/thermos-3D" target="_blank" rel="noopener noreferrer" class="external-link">Ver Código ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 6 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">Sentinel OSINT Tracker</h4>
+                        <p class="grid-desc">Motor de telemetría de alta concurrencia para monitorizar en tiempo real la salud y el rendimiento de múltiples servicios web y APIs. Realiza peticiones HTTP, mide latencia, geolocaliza IPs y muestra información de cabeceras y certificados SSL.</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>Streamlit</li><li>OSINT</li><li>Monitorización</li><li>Geolocalización</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://apitraker.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Ver App ↗</a>
+                            <a href="https://github.com/joseasenjo/Sentinel-API-Tracker" target="_blank" rel="noopener noreferrer" class="external-link">Ver Código ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 7 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">MailTrace-OSINT</h4>
+                        <p class="grid-desc">Herramienta de inteligencia de fuentes abiertas para el rastreo y análisis de correos electrónicos. Permite verificar la validez de direcciones, identificar proveedores de servicios y extraer metadatos de cabeceras para investigaciones de seguridad y ciberinteligencia.</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>Streamlit</li><li>OSINT</li><li>Email Analysis</li><li>Ciberseguridad</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://mailtrace-osint.streamlit.app/" target="_blank" rel="noopener noreferrer" class="external-link">Ver App ↗</a>
+                            <a href="https://github.com/joseasenjo/MailTrace-OSINT" target="_blank" rel="noopener noreferrer" class="external-link">Ver Código ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Proyecto 8 -->
+                    <div class="grid-card">
+                        <h4 class="grid-title">ETL & Arquitectura de Datos SaaS</h4>
+                        <p class="grid-desc">Diseño de pipelines en tiempo real enfocado en el uso, manejo y compilación de datos y variables. Implementación de una arquitectura SaaS resiliente con consumo de memoria (RAM) optimizado para el procesamiento masivo de APIs de terceros sin impacto de escritura en disco.</p>
+                        <ul class="tech-tags">
+                            <li>Python</li><li>ETL</li><li>Data Engineering</li><li>SaaS</li><li>FastAPI</li>
+                        </ul>
+                        <div class="card-links">
+                            <a href="https://www.linkedin.com/posts/joseluisasenjo_etl-saas-apis-ugcPost-7478389794537095168-rl2j/?utm_source=share&utm_medium=member_desktop&rcm=ACoAABgFVusBsZWlWCAn49tFhURwv6b_Vjbu8Jg" target="_blank" rel="noopener noreferrer" class="external-link">Leer Artículo ↗</a>
+                        </div>
+                    </div>
+
+                    <!-- Botón Cerrar Sesión -->
+                    <div class="grid-footer">
+                        <button class="btn-outline-white" id="closeLabBtn" style="border-color: #c0392b; color: #e74c3c;">
+                            <i class="fas fa-sign-out-alt" style="margin-right: 8px;"></i> Cerrar Sesión
+                        </button>
+                    </div>
+                </div>
+                <!-- Fin grid -->
+            </section>
+
+            <section id="contact">
+                <h3 class="section-title">Contacto</h3>
+                <p>Mi bandeja de entrada siempre está abierta. Si tienes alguna propuesta, pregunta o simplemente quieres hablar sobre Ingeniería de Retail, optimización en Python o analítica avanzada, no dudes en escribirme.</p>
+                <a href="mailto:asenjo.jose@hotmail.com" class="external-link" style="font-size: 0.95rem; color: var(--accent); border-color: var(--accent);">Escríbeme un Correo ➔</a>
+            </section>
+
+            <footer class="site-footer">
+                <p>© 2026 Jose Luis Asenjo</p>
+            </footer>
+        </main>
+
+        <div class="left-social-bar">
+            <a href="https://www.linkedin.com/in/joseluisasenjo" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <a href="https://github.com/joseasenjo" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="https://www.salir.com/autor/jose-luis-asenjo-16.html" target="_blank" rel="noopener noreferrer" title="Salir.com"><i class="fas fa-map-marker-alt"></i></a>
+            <a href="https://youtube.com/@codepydroid?si=hx4jE4KthjKyhizK" target="_blank" rel="noopener noreferrer" title="YouTube"><i class="fab fa-youtube"></i></a>
+        </div>
+
+        <div class="right-mail-bar">
+            <a href="mailto:asenjo.jose@hotmail.com">asenjo.jose@hotmail.com</a>
+        </div>
+
+    </div>
+
+    <!-- ===== JAVASCRIPT PARA ACCESO CON CONTRASEÑA Y TOGGLE ===== -->
+    <script>
+        (function() {
+            const PASSWORD = 'retail2026';
+            const restrictedBlock = document.getElementById('restrictedBlock');
+            const projectGrid = document.getElementById('projectGrid');
+            const passwordInput = document.getElementById('passwordInput');
+            const accessBtn = document.getElementById('accessBtn');
+            const accessMessage = document.getElementById('accessMessage');
+            const togglePassword = document.getElementById('togglePassword');
+            const closeBtn = document.getElementById('closeLabBtn');
+
+            // Toggle mostrar/ocultar contraseña
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+            });
+
+            function showError(msg) {
+                accessMessage.textContent = msg;
+                accessMessage.className = 'error-msg';
+                passwordInput.value = '';
+                passwordInput.focus();
+                // Asegurar que el ojo vuelva a estado de "oculto"
+                if (passwordInput.getAttribute('type') === 'text') {
+                    passwordInput.setAttribute('type', 'password');
+                    togglePassword.classList.remove('fa-eye-slash');
+                    togglePassword.classList.add('fa-eye');
+                }
+            }
+
+            function showSuccess() {
+                accessMessage.textContent = '✅ Acceso concedido. Mostrando proyectos...';
+                accessMessage.className = 'success-msg';
+                restrictedBlock.style.display = 'none';
+                projectGrid.classList.add('visible');
+                sessionStorage.setItem('pythonLabAccess', 'granted');
+            }
+
+            function handleAccess() {
+                const entered = passwordInput.value.trim();
+                if (entered === PASSWORD) {
+                    showSuccess();
+                } else {
+                    showError('❌ Contraseña incorrecta. Inténtalo de nuevo.');
+                }
+            }
+
+            // Cerrar sesión
+            closeBtn.addEventListener('click', function() {
+                projectGrid.classList.remove('visible');
+                restrictedBlock.style.display = 'block';
+                sessionStorage.removeItem('pythonLabAccess');
+                passwordInput.value = '';
+                accessMessage.textContent = '';
+                accessMessage.className = 'error-msg';
+                // Resetear ojo a estado oculto
+                if (passwordInput.getAttribute('type') === 'text') {
+                    passwordInput.setAttribute('type', 'password');
+                    togglePassword.classList.remove('fa-eye-slash');
+                    togglePassword.classList.add('fa-eye');
+                }
+                // Scroll suave hasta la sección para que vea el bloque de nuevo
+                document.getElementById('python-lab').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            accessBtn.addEventListener('click', handleAccess);
+            passwordInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAccess();
+                }
+            });
+
+            // Restaurar sesión si ya estaba activa
+            if (sessionStorage.getItem('pythonLabAccess') === 'granted') {
+                restrictedBlock.style.display = 'none';
+                projectGrid.classList.add('visible');
+            }
+        })();
+    </script>
+
+</body>
+</html>
