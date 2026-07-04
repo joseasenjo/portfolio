@@ -133,13 +133,31 @@
         .cv-details summary:hover { border-color: var(--accent); color: var(--accent); }
         .cv-details[open] summary .icon-arrow { transform: rotate(180deg); }
         .icon-arrow { transition: transform 0.3s ease; font-size: 0.8rem; color: var(--accent); }
-        .cv-content { padding: 2rem 1rem 1rem 1rem; border-top: 1px solid var(--border-color); margin-top: 1rem; animation: fadeIn 0.4s ease; }
         
-        .pdf-viewer-container {
-            width: 100%; height: 680px; border: 1px solid var(--border-color);
-            border-radius: 4px; overflow: hidden; background-color: #1a1a1a; margin-bottom: 1.5rem;
+        /* 🔽 CAMBIO: Eliminar padding lateral para que el visor ocupe todo el ancho */
+        .cv-content { 
+            padding: 2rem 0 1rem 0; 
+            border-top: 1px solid var(--border-color); 
+            margin-top: 1rem; 
+            animation: fadeIn 0.4s ease; 
         }
-        .pdf-viewer-frame { width: 100%; height: 100%; border: none; }
+        
+        /* 🔽 CAMBIO: Altura adaptable y mínimo para que se vea bien */
+        .pdf-viewer-container {
+            width: 100%; 
+            height: 80vh; 
+            min-height: 500px; 
+            border: 1px solid var(--border-color);
+            border-radius: 4px; 
+            overflow: hidden; 
+            background-color: #1a1a1a; 
+            margin-bottom: 1.5rem;
+        }
+        .pdf-viewer-frame { 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
 
         .cv-actions { margin-top: 1.5rem; text-align: center; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; align-items: center; }
         
@@ -371,6 +389,7 @@
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* ===== MEDIA QUERY PARA MÓVILES (CORREGIDA) ===== */
         @media (max-width: 768px) {
             .app-container { flex-direction: column; padding: 2rem; }
             header { width: 100%; position: relative; height: auto; padding: 2rem 0; }
@@ -379,11 +398,19 @@
             .mobile-socials { display: flex !important; }
             .featured-project { border-left: none; padding: 0; border-top: 1px solid var(--border-color); padding-top: 2rem; }
             .experience-card { padding: 1.2rem; }
-            .pdf-viewer-container { display: none; }
-            .btn-close-viewer { display: none; }
+            
+            /* 🔽 CAMBIO: Mostrar visor en móviles y ajustar altura */
+            .pdf-viewer-container { 
+                display: block; 
+                height: 60vh; 
+                min-height: 300px;
+            }
+            .btn-close-viewer { 
+                display: inline-block; 
+            }
             .restricted-area { padding: 1.5rem; }
         }
-    </style>
+</style>
 </head>
 <body>
     <div class="app-container">
